@@ -184,6 +184,45 @@ const GAMES = {
     story: "Your personal completion story for Celeste goes here. The journey through golden strawberries, what the game's message about anxiety and persistence meant to you, and how it connects to the completionist philosophy.",
   },
 
+    "game-id-here": {
+    title: "Game Title Here",
+    cover: "🎮",
+    difficulty: "?/10",
+    timeEstimate: "??–?? hrs",
+    hardestPart: "Describe the hardest part",
+
+    missables: [
+      "First missable thing and what to do about it",
+      "Second missable thing",
+      // Add more or use just: "No permanently missable items"
+    ],
+
+    completionOrder: [
+      "Step 1 — what to do first",
+      "Step 2 — what to do next",
+      "Step 3 — and so on",
+    ],
+
+    categories: [
+      {
+        name: "Category Name",
+        items: [
+          { name: "Item Name", location: "Where / how to get it", tip: null },
+          { name: "Item Name", location: "Where / how to get it", tip: "Your personal tip here" },
+          // Add as many items as needed
+        ]
+      },
+      {
+        name: "Another Category",
+        items: [
+          { name: "Item Name", location: "Where / how to get it", tip: null },
+        ]
+      },
+      // Add as many categories as needed
+    ],
+
+    story: "Your personal completion story goes here.",
+  },
 };
 
 
