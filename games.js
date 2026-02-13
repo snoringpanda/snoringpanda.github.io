@@ -101,7 +101,27 @@ const GAMES = {
       {
         name: "Warbonds",
         items: [
-          { name: "Item Name", location: "Where / how to get it", tip: null },
+          { name: "Helldivers Mobilize!", location: "Acquisition Center", tip: null },
+          { name: "Steeled Veterans", location: "Acquisition Center", tip: null },
+          { name: "Cutting Edge", location: "Acquisition Center", tip: null },
+          { name: "Democratic Detonation", location: "Acquisition Center", tip: null },
+          { name: "Polar Patriots", location: "Acquisition Center", tip: null },
+          { name: "Viper Commandos", location: "Acquisition Center", tip: null },
+          { name: "Freedom's Flame", location: "Acquisition Center", tip: null },
+          { name: "Chemical Agents", location: "Acquisition Center", tip: null },
+          { name: "Truth Enforcers", location: "Acquisition Center", tip: null },
+          { name: "Urban Legends", location: "Acquisition Center", tip: null },
+          { name: "Servants of Freedom", location: "Acquisition Center", tip: null },
+          { name: "Borderline Justice", location: "Acquisition Center", tip: null },
+          { name: "Masters of Ceremony", location: "Acquisition Center", tip: null },
+          { name: "Force of Law", location: "Acquisition Center", tip: null },
+          { name: "Control Group", location: "Acquisition Center", tip: null },
+          { name: "Dust Devils", location: "Acquisition Center", tip: null },
+          { name: "Python Commandos", location: "Acquisition Center", tip: null },
+          { name: "Redacted Regiment", location: "Acquisition Center", tip: null },
+          { name: "Siege Breakers", location: "Acquisition Center", tip: null },
+          { name: "Obedient Democracy Support Troopers", location: "Acquisition Center", tip: null },
+          { name: "Righteous Revenants", location: "Acquisition Center", tip: null },
         ]
       },
       {
