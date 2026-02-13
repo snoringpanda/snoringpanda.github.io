@@ -79,7 +79,7 @@ const GAMES = {
 
         categories: [
       {
-        name: "Category Name",
+        name: "Weapons Levels",
         items: [
           { name: "Item Name", location: "Where / how to get it", tip: null },
           { name: "Item Name", location: "Where / how to get it", tip: "Your personal tip here" },
@@ -87,12 +87,29 @@ const GAMES = {
         ]
       },
       {
-        name: "Another Category",
+        name: "Weapons Patterns",
         items: [
           { name: "Item Name", location: "Where / how to get it", tip: null },
         ]
       },
-      // Add as many categories as needed
+      {
+        name: "Weapons Attachments",
+        items: [
+          { name: "Item Name", location: "Where / how to get it", tip: null },
+        ]
+      },
+      {
+        name: "Warbonds",
+        items: [
+          { name: "Item Name", location: "Where / how to get it", tip: null },
+        ]
+      },
+      {
+        name: "Achievements",
+        items: [
+          { name: "Item Name", location: "Where / how to get it", tip: null },
+        ]
+      },
     ],
 
     story: "Your personal completion story goes here.",
