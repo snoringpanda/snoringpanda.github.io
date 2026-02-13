@@ -11,12 +11,56 @@
 const GAMES = {
 
   // ============================================================
-  // EXAMPLE GAME 1 — Hollow Knight (you can edit or remove this)
+  // PLACEHOLDER
   // ============================================================
 
     "placeholder": {
     title: "placeholder",
     cover: "🎮",
+    difficulty: "?/10",
+    timeEstimate: "??–?? hrs",
+    hardestPart: "Describe the hardest part",
+
+    missables: [
+      "First missable thing and what to do about it",
+      "Second missable thing",
+      // Add more or use just: "No permanently missable items"
+    ],
+
+    completionOrder: [
+      "Step 1 — what to do first",
+      "Step 2 — what to do next",
+      "Step 3 — and so on",
+    ],
+
+        categories: [
+      {
+        name: "Category Name",
+        items: [
+          { name: "Item Name", location: "Where / how to get it", tip: null },
+          { name: "Item Name", location: "Where / how to get it", tip: "Your personal tip here" },
+          // Add as many items as needed
+        ]
+      },
+      {
+        name: "Another Category",
+        items: [
+          { name: "Item Name", location: "Where / how to get it", tip: null },
+        ]
+      },
+      // Add as many categories as needed
+    ],
+
+    story: "Your personal completion story goes here.",
+  },
+
+  // ============================================================
+  // HELLDIVERS 2
+  // ============================================================
+
+    "helldivers-2": {
+    title: "Helldivers 2",
+    cover: "🫡",
     difficulty: "?/10",
     timeEstimate: "??–?? hrs",
     hardestPart: "Describe the hardest part",
