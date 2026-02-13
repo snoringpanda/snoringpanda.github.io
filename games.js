@@ -184,8 +184,8 @@ const GAMES = {
     story: "Your personal completion story for Celeste goes here. The journey through golden strawberries, what the game's message about anxiety and persistence meant to you, and how it connects to the completionist philosophy.",
   },
 
-    "game-id-here": {
-    title: "Game Title Here",
+    "placeholder": {
+    title: "placeholder",
     cover: "🎮",
     difficulty: "?/10",
     timeEstimate: "??–?? hrs",
@@ -203,7 +203,7 @@ const GAMES = {
       "Step 3 — and so on",
     ],
 
-    categories: [
+        categories: [
       {
         name: "Category Name",
         items: [
@@ -223,6 +223,7 @@ const GAMES = {
 
     story: "Your personal completion story goes here.",
   },
+  
 };
 
 
