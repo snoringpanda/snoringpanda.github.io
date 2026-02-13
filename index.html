@@ -14,15 +14,15 @@
     --text: #e4e4ef;
     --text-dim: #8888a0;
     --text-muted: #55556a;
-    --accent: #7c3aed;
-    --accent-soft: #7c3aed33;
+    --accent: #3b82f6;
+    --accent-soft: #3b82f633;
     --gold: #f0c040;
     --gold-soft: #f0c04033;
     --green: #22c55e;
     --green-soft: #22c55e22;
     --red: #ef4444;
     --bar-bg: #1e1e2e;
-    --bar-fill: linear-gradient(90deg, #7c3aed, #a855f7);
+    --bar-fill: linear-gradient(90deg, #3b82f6, #60a5fa);
     --bar-fill-gold: linear-gradient(90deg, #d4a017, #f0c040);
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -100,7 +100,7 @@
   }
   .btn:hover { border-color: var(--accent); color: var(--text); }
   .btn-accent { background: var(--accent); border-color: var(--accent); color: white; }
-  .btn-accent:hover { background: #6d28d9; }
+  .btn-accent:hover { opacity: 0.85; }
   .btn-gold { border-color: var(--gold); color: var(--gold); }
   .btn-gold:hover { background: var(--gold-soft); }
   .save-msg {
@@ -303,6 +303,52 @@
   .story-title { font-family: 'Press Start 2P', monospace; font-size: 8px; color: var(--accent); letter-spacing: 1px; margin-bottom: 10px; }
   .story p { font-size: 13px; color: var(--text-dim); line-height: 1.7; font-weight: 300; }
 
+  /* THEME PICKER */
+  .theme-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 20px;
+    padding: 10px 14px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+  }
+  .theme-label {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 8px;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+    margin-right: 6px;
+    white-space: nowrap;
+  }
+  .theme-swatches { display: flex; gap: 6px; flex-wrap: wrap; }
+  .theme-swatch {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+  }
+  .theme-swatch:hover { transform: scale(1.15); }
+  .theme-swatch.active {
+    border-color: white;
+    box-shadow: 0 0 10px var(--accent-soft);
+  }
+  .theme-swatch.active::after {
+    content: '✓';
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    color: white;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+  }
+
   /* MOBILE */
   @media (max-width: 600px) {
     .app { padding: 12px 10px 80px; }
@@ -315,9 +361,35 @@
 <div class="app" id="app"></div>
 <script src="games.js"></script>
 <script>
+// ============ THEMES ============
+const THEMES = {
+  blue:   { accent: '#3b82f6', accentSoft: '#3b82f633', barFill: 'linear-gradient(90deg, #3b82f6, #60a5fa)', swatch: '#3b82f6' },
+  purple: { accent: '#7c3aed', accentSoft: '#7c3aed33', barFill: 'linear-gradient(90deg, #7c3aed, #a855f7)', swatch: '#7c3aed' },
+  green:  { accent: '#22c55e', accentSoft: '#22c55e33', barFill: 'linear-gradient(90deg, #16a34a, #22c55e)', swatch: '#22c55e' },
+  red:    { accent: '#ef4444', accentSoft: '#ef444433', barFill: 'linear-gradient(90deg, #dc2626, #ef4444)', swatch: '#ef4444' },
+  orange: { accent: '#f97316', accentSoft: '#f9731633', barFill: 'linear-gradient(90deg, #ea580c, #f97316)', swatch: '#f97316' },
+  pink:   { accent: '#ec4899', accentSoft: '#ec489933', barFill: 'linear-gradient(90deg, #db2777, #ec4899)', swatch: '#ec4899' },
+  cyan:   { accent: '#06b6d4', accentSoft: '#06b6d433', barFill: 'linear-gradient(90deg, #0891b2, #06b6d4)', swatch: '#06b6d4' },
+};
+
+function applyTheme(name) {
+  const t = THEMES[name] || THEMES.blue;
+  currentTheme = name;
+  const root = document.documentElement;
+  root.style.setProperty('--accent', t.accent);
+  root.style.setProperty('--accent-soft', t.accentSoft);
+  root.style.setProperty('--bar-fill', t.barFill);
+}
+
+function setTheme(name) {
+  applyTheme(name);
+  render();
+}
+
 // ============ STATE ============
 let state = {};
 let currentGame = null;
+let currentTheme = 'blue';
 let searchQuery = '';
 const openCats = new Set();
 
@@ -350,18 +422,22 @@ function encode(st) {
     }
     parts.push(gid + ':' + btoa(String.fromCharCode(...bytes)));
   }
+  if (currentTheme && currentTheme !== 'blue') parts.push('T:' + currentTheme);
   return 'PG1|' + parts.join('|');
 }
 
 function decode(code) {
   if (!code.startsWith('PG1|')) return null;
   const st = initState();
+  let theme = 'blue';
   const parts = code.slice(4).split('|');
   for (const part of parts) {
     const sep = part.indexOf(':');
     if (sep === -1) continue;
     const gid = part.slice(0, sep);
     const b64 = part.slice(sep + 1);
+    // Handle theme token
+    if (gid === 'T') { if (THEMES[b64]) theme = b64; continue; }
     if (!GAMES[gid]) continue;
     try {
       const raw = atob(b64);
@@ -376,6 +452,7 @@ function decode(code) {
       });
     } catch(e) {}
   }
+  st._theme = theme;
   return st;
 }
 
@@ -412,6 +489,14 @@ function render() {
         <button class="btn btn-gold" onclick="loadCode()">Load</button>
       </div>
       <div class="save-msg" id="saveMsg"></div>
+    </div>
+    <div class="theme-bar">
+      <span class="theme-label">🎨 THEME</span>
+      <div class="theme-swatches">
+        ${Object.entries(THEMES).map(([name, t]) =>
+          `<div class="theme-swatch ${name === currentTheme ? 'active' : ''}" style="background:${t.swatch}" onclick="setTheme('${name}')" title="${name}"></div>`
+        ).join('')}
+      </div>
     </div>`;
 
   if (!currentGame) {
@@ -535,6 +620,15 @@ function render() {
   }
 
   app.innerHTML = html;
+
+  // Restore search bar focus after re-render
+  if (!currentGame) {
+    const search = app.querySelector('.game-search');
+    if (search && searchQuery !== '') {
+      search.focus();
+      search.setSelectionRange(search.value.length, search.value.length);
+    }
+  }
 }
 
 // ============ INTERACTIONS ============
@@ -566,7 +660,10 @@ function loadCode() {
   if (!code) { showMsg('\u2718 Paste a save code first.', 'var(--red)'); return; }
   const loaded = decode(code);
   if (!loaded) { showMsg('\u2718 Invalid save code.', 'var(--red)'); return; }
+  const theme = loaded._theme || 'blue';
+  delete loaded._theme;
   state = loaded;
+  applyTheme(theme);
   showMsg('\u2714 Progress loaded!', 'var(--green)');
   render();
 }
