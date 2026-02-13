@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Completionist Sensei — Tracker</title>
+<title>Purrgress's Completionist Tracker</title>
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=JetBrains+Mono:wght@400;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -11,7 +11,6 @@
     --bg-card: #12121a;
     --bg-card-hover: #1a1a26;
     --border: #2a2a3a;
-    --border-glow: #7c3aed;
     --text: #e4e4ef;
     --text-dim: #8888a0;
     --text-muted: #55556a;
@@ -25,20 +24,14 @@
     --bar-bg: #1e1e2e;
     --bar-fill: linear-gradient(90deg, #7c3aed, #a855f7);
     --bar-fill-gold: linear-gradient(90deg, #d4a017, #f0c040);
-    --complete-glow: 0 0 20px #7c3aed55, 0 0 40px #7c3aed22;
   }
-
   * { margin: 0; padding: 0; box-sizing: border-box; }
-
   body {
     background: var(--bg);
     color: var(--text);
     font-family: 'Outfit', sans-serif;
     min-height: 100vh;
-    overflow-x: hidden;
   }
-
-  /* Subtle background grid */
   body::before {
     content: '';
     position: fixed;
@@ -47,92 +40,54 @@
       linear-gradient(var(--border) 1px, transparent 1px),
       linear-gradient(90deg, var(--border) 1px, transparent 1px);
     background-size: 60px 60px;
-    opacity: 0.06;
+    opacity: 0.05;
     pointer-events: none;
-    z-index: 0;
   }
-
   .app { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; padding: 20px 16px 100px; }
 
   /* HEADER */
-  .header {
-    text-align: center;
-    padding: 40px 0 30px;
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 30px;
-  }
+  .header { text-align: center; padding: 40px 0 24px; margin-bottom: 24px; }
   .header-title {
     font-family: 'Press Start 2P', monospace;
-    font-size: clamp(14px, 4vw, 22px);
+    font-size: clamp(11px, 3.5vw, 18px);
     color: var(--accent);
     letter-spacing: 2px;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
     text-shadow: 0 0 30px var(--accent-soft);
   }
-  .header-sub {
-    font-size: 13px;
-    color: var(--text-dim);
-    font-weight: 300;
-    letter-spacing: 1px;
-  }
+  .header-sub { font-size: 13px; color: var(--text-dim); font-weight: 300; letter-spacing: 1px; }
 
-  /* GAME SWITCHER */
-  .game-switcher {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-bottom: 24px;
-  }
-  .game-tab {
-    padding: 8px 18px;
-    border-radius: 6px;
-    border: 1px solid var(--border);
-    background: var(--bg-card);
-    color: var(--text-dim);
-    font-family: 'Outfit', sans-serif;
-    font-size: 13px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  .game-tab:hover { border-color: var(--accent); color: var(--text); }
-  .game-tab.active {
-    background: var(--accent-soft);
-    border-color: var(--accent);
-    color: var(--accent);
-    box-shadow: 0 0 12px var(--accent-soft);
-  }
-
-  /* SAVE CODE SECTION */
-  .save-section {
+  /* SAVE BAR */
+  .save-bar {
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: 10px;
-    padding: 16px 20px;
-    margin-bottom: 24px;
+    padding: 14px 18px;
+    margin-bottom: 20px;
   }
-  .save-section-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 12px;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-  .save-section-title {
+  .save-bar-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .save-bar-title {
     font-family: 'Press Start 2P', monospace;
-    font-size: 9px;
-    color: var(--text-dim);
+    font-size: 8px;
+    color: var(--text-muted);
     letter-spacing: 1px;
+    margin-bottom: 8px;
   }
-  .save-buttons {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
+  .save-input {
+    flex: 1;
+    min-width: 200px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    color: var(--accent);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    padding: 8px 10px;
+    word-break: break-all;
   }
+  .save-input:focus { outline: none; border-color: var(--accent); }
   .btn {
-    padding: 7px 16px;
+    padding: 8px 14px;
     border-radius: 5px;
     border: 1px solid var(--border);
     background: var(--bg);
@@ -144,34 +99,10 @@
     white-space: nowrap;
   }
   .btn:hover { border-color: var(--accent); color: var(--text); }
-  .btn-accent {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: white;
-  }
+  .btn-accent { background: var(--accent); border-color: var(--accent); color: white; }
   .btn-accent:hover { background: #6d28d9; }
-  .btn-gold {
-    background: transparent;
-    border-color: var(--gold);
-    color: var(--gold);
-  }
+  .btn-gold { border-color: var(--gold); color: var(--gold); }
   .btn-gold:hover { background: var(--gold-soft); }
-  .save-code-area {
-    width: 100%;
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    color: var(--accent);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    padding: 10px 12px;
-    resize: vertical;
-    min-height: 50px;
-    max-height: 120px;
-    line-break: anywhere;
-    word-break: break-all;
-  }
-  .save-code-area:focus { outline: none; border-color: var(--accent); }
   .save-msg {
     font-size: 11px;
     color: var(--green);
@@ -180,626 +111,267 @@
     font-family: 'JetBrains Mono', monospace;
   }
 
+  /* GAME SELECT VIEW */
+  .game-search {
+    width: 100%;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-family: 'Outfit', sans-serif;
+    font-size: 14px;
+    padding: 10px 14px;
+    margin-bottom: 16px;
+  }
+  .game-search:focus { outline: none; border-color: var(--accent); }
+  .game-search::placeholder { color: var(--text-muted); }
+
+  .game-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .game-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .game-card:hover { border-color: var(--accent); background: var(--bg-card-hover); transform: translateY(-2px); }
+  .game-card.complete { border-color: var(--gold); }
+  .game-card-emoji { font-size: 32px; margin-bottom: 8px; display: block; }
+  .game-card-title { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 6px; line-height: 1.3; }
+  .game-card-bar {
+    width: 100%;
+    height: 4px;
+    background: var(--bar-bg);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 4px;
+  }
+  .game-card-bar-fill {
+    height: 100%;
+    background: var(--bar-fill);
+    border-radius: 2px;
+    transition: width 0.3s;
+  }
+  .game-card-bar-fill.complete { background: var(--bar-fill-gold); }
+  .game-card-percent {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+  }
+  .game-card-percent.complete { color: var(--gold); }
+  .game-count {
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+  }
+
+  /* BACK BUTTON */
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    color: var(--text-dim);
+    font-family: 'Outfit', sans-serif;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-bottom: 20px;
+  }
+  .back-btn:hover { border-color: var(--accent); color: var(--text); }
+
   /* DASHBOARD */
   .dashboard {
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: 10px;
     padding: 20px;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
   }
-  .dashboard-header {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    margin-bottom: 16px;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-  .dashboard-game-title {
-    font-family: 'Outfit', sans-serif;
-    font-size: 22px;
-    font-weight: 700;
-    color: var(--text);
-  }
-  .dashboard-percent {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 28px;
-    font-weight: 700;
-    color: var(--accent);
-  }
-  .dashboard-percent.complete {
-    color: var(--gold);
-    text-shadow: 0 0 20px var(--gold-soft);
-  }
-  .overall-bar {
-    width: 100%;
-    height: 18px;
-    background: var(--bar-bg);
-    border-radius: 9px;
-    overflow: hidden;
-    margin-bottom: 16px;
-    position: relative;
-  }
-  .overall-bar-fill {
-    height: 100%;
-    background: var(--bar-fill);
-    border-radius: 9px;
-    transition: width 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
-    position: relative;
-  }
+  .dashboard.complete { border-color: var(--gold); box-shadow: 0 0 20px #f0c04022, 0 0 40px #f0c04011; }
+  .dash-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 14px; flex-wrap: wrap; gap: 8px; }
+  .dash-title { font-size: 22px; font-weight: 700; }
+  .dash-pct { font-family: 'JetBrains Mono', monospace; font-size: 28px; font-weight: 700; color: var(--accent); }
+  .dash-pct.complete { color: var(--gold); text-shadow: 0 0 20px var(--gold-soft); }
+  .overall-bar { width: 100%; height: 16px; background: var(--bar-bg); border-radius: 8px; overflow: hidden; margin-bottom: 14px; }
+  .overall-bar-fill { height: 100%; background: var(--bar-fill); border-radius: 8px; transition: width 0.5s cubic-bezier(.25,.8,.25,1); position: relative; }
   .overall-bar-fill.complete { background: var(--bar-fill-gold); }
   .overall-bar-fill::after {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
-    animation: shimmer 2s infinite;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+    animation: shimmer 2.5s infinite;
   }
-  @keyframes shimmer {
-    0% { transform: translateX(-100%); }
-    100% { transform: translateX(100%); }
-  }
+  @keyframes shimmer { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
 
-  .category-stats {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 10px;
-  }
-  .cat-stat {
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 12px 14px;
-    transition: border-color 0.2s;
-  }
-  .cat-stat:hover { border-color: var(--accent); }
-  .cat-stat-name {
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--text-dim);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 6px;
-  }
-  .cat-stat-count {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 14px;
-    color: var(--text);
-    margin-bottom: 6px;
-  }
-  .cat-stat-count .done { color: var(--accent); }
-  .cat-stat-count .complete-text { color: var(--gold); }
-  .cat-bar {
-    width: 100%;
-    height: 6px;
-    background: var(--bar-bg);
-    border-radius: 3px;
-    overflow: hidden;
-  }
-  .cat-bar-fill {
-    height: 100%;
-    background: var(--bar-fill);
-    border-radius: 3px;
-    transition: width 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-  }
+  .cat-stats { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; }
+  .cat-stat { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; }
+  .cat-stat.complete { border-color: var(--gold); }
+  .cat-stat-name { font-size: 11px; font-weight: 600; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 4px; }
+  .cat-stat-count { font-family: 'JetBrains Mono', monospace; font-size: 13px; margin-bottom: 5px; }
+  .cat-stat-count .hi { color: var(--accent); }
+  .cat-stat-count .gold { color: var(--gold); }
+  .cat-bar { width: 100%; height: 5px; background: var(--bar-bg); border-radius: 3px; overflow: hidden; }
+  .cat-bar-fill { height: 100%; background: var(--bar-fill); border-radius: 3px; transition: width 0.4s; }
   .cat-bar-fill.complete { background: var(--bar-fill-gold); }
 
-  /* MISSABLES WARNING */
+  .celebration { display: none; text-align: center; padding: 20px 0 4px; animation: fadeUp .5s; }
+  .celebration.show { display: block; }
+  .celeb-text { font-family: 'Press Start 2P', monospace; font-size: clamp(10px, 3vw, 16px); color: var(--gold); text-shadow: 0 0 30px var(--gold-soft); margin-bottom: 6px; }
+  .celeb-sub { font-size: 13px; color: var(--text-dim); font-weight: 300; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* META */
+  .meta-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; margin-bottom: 20px; }
+  .meta-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 12px; text-align: center; }
+  .meta-label { font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-muted); margin-bottom: 5px; }
+  .meta-value { font-family: 'JetBrains Mono', monospace; font-size: 18px; font-weight: 700; }
+  .meta-value.diff { color: var(--gold); }
+
+  /* MISSABLES */
   .missables {
     background: linear-gradient(135deg, #1a0a0a, #12121a);
     border: 1px solid #3a1515;
     border-left: 3px solid var(--red);
     border-radius: 10px;
-    padding: 16px 20px;
-    margin-bottom: 24px;
+    padding: 14px 18px;
+    margin-bottom: 20px;
   }
-  .missables-title {
-    font-family: 'Press Start 2P', monospace;
-    font-size: 9px;
-    color: var(--red);
-    letter-spacing: 1px;
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .missables-list {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-  .missables-list li {
-    font-size: 13px;
-    color: #e88;
-    padding-left: 16px;
-    position: relative;
-    line-height: 1.5;
-  }
-  .missables-list li::before {
-    content: '\u26A0';
-    position: absolute;
-    left: 0;
-    font-size: 11px;
+  .miss-title { font-family: 'Press Start 2P', monospace; font-size: 8px; color: var(--red); letter-spacing: 1px; margin-bottom: 8px; }
+  .miss-list { list-style: none; }
+  .miss-list li { font-size: 13px; color: #e88; padding-left: 16px; position: relative; line-height: 1.5; margin-bottom: 4px; }
+  .miss-list li::before { content: '\u26A0'; position: absolute; left: 0; font-size: 11px; }
+
+  /* ORDER */
+  .order { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 14px 18px; margin-bottom: 20px; }
+  .order-title { font-family: 'Press Start 2P', monospace; font-size: 8px; color: var(--accent); letter-spacing: 1px; margin-bottom: 10px; }
+  .order-steps { display: flex; flex-direction: column; gap: 7px; }
+  .order-step { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: var(--text-dim); line-height: 1.5; }
+  .order-num {
+    flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%;
+    background: var(--accent-soft); color: var(--accent);
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
   }
 
-  /* CATEGORY SECTION */
-  .category {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    margin-bottom: 16px;
-    overflow: hidden;
-  }
-  .category-header {
-    padding: 14px 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    cursor: pointer;
-    user-select: none;
-    transition: background 0.2s;
-  }
-  .category-header:hover { background: var(--bg-card-hover); }
-  .category-header-left {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  .category-toggle {
-    font-size: 12px;
-    color: var(--text-muted);
-    transition: transform 0.3s;
-  }
-  .category-toggle.open { transform: rotate(90deg); }
-  .category-name {
-    font-weight: 600;
-    font-size: 15px;
-    color: var(--text);
-  }
-  .category-count {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 13px;
-    color: var(--text-dim);
-  }
-  .category-count .done { color: var(--accent); }
+  /* CATEGORIES */
+  .category { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; margin-bottom: 12px; overflow: hidden; }
+  .cat-header { padding: 12px 18px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; user-select: none; transition: background .15s; }
+  .cat-header:hover { background: var(--bg-card-hover); }
+  .cat-header-left { display: flex; align-items: center; gap: 10px; }
+  .cat-toggle { font-size: 11px; color: var(--text-muted); transition: transform .3s; }
+  .cat-toggle.open { transform: rotate(90deg); }
+  .cat-name { font-weight: 600; font-size: 14px; }
+  .cat-count { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text-dim); }
+  .cat-count .hi { color: var(--accent); }
 
-  .category-items {
-    border-top: 1px solid var(--border);
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-  }
-  .category-items.open { max-height: 5000px; }
+  .cat-items { border-top: 1px solid var(--border); max-height: 0; overflow: hidden; transition: max-height .4s cubic-bezier(.25,.8,.25,1); }
+  .cat-items.open { max-height: 10000px; }
 
-  .item {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    padding: 10px 20px;
-    border-bottom: 1px solid var(--border);
-    transition: background 0.15s;
-    cursor: pointer;
-  }
+  .item { display: flex; align-items: flex-start; gap: 10px; padding: 9px 18px; border-bottom: 1px solid var(--border); transition: background .1s; cursor: pointer; }
   .item:last-child { border-bottom: none; }
   .item:hover { background: var(--bg-card-hover); }
-  .item.checked { opacity: 0.5; }
+  .item.checked { opacity: 0.45; }
   .item.checked .item-name { text-decoration: line-through; }
-
-  .item-checkbox {
-    flex-shrink: 0;
-    width: 20px;
-    height: 20px;
-    border: 2px solid var(--border);
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 1px;
-    transition: all 0.2s;
-    color: transparent;
-    font-size: 12px;
+  .item-cb {
+    flex-shrink: 0; width: 20px; height: 20px; border: 2px solid var(--border);
+    border-radius: 4px; display: flex; align-items: center; justify-content: center;
+    margin-top: 1px; transition: all .2s; color: transparent; font-size: 12px;
   }
-  .item.checked .item-checkbox {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: white;
-    box-shadow: 0 0 8px var(--accent-soft);
-  }
+  .item.checked .item-cb { background: var(--accent); border-color: var(--accent); color: white; box-shadow: 0 0 8px var(--accent-soft); }
   .item-content { flex: 1; min-width: 0; }
-  .item-name {
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--text);
-    margin-bottom: 2px;
-  }
-  .item-detail {
-    font-size: 12px;
-    color: var(--text-dim);
-    line-height: 1.4;
-  }
-  .item-tip {
-    font-size: 11px;
-    color: var(--accent);
-    font-style: italic;
-    margin-top: 3px;
-  }
+  .item-name { font-size: 13px; font-weight: 500; margin-bottom: 1px; }
+  .item-loc { font-size: 12px; color: var(--text-dim); line-height: 1.4; }
+  .item-tip { font-size: 11px; color: var(--accent); font-style: italic; margin-top: 2px; }
 
-  /* COMPLETION STORY */
-  .story {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 20px;
-    margin-top: 24px;
-  }
-  .story-title {
-    font-family: 'Press Start 2P', monospace;
-    font-size: 9px;
-    color: var(--accent);
-    letter-spacing: 1px;
-    margin-bottom: 12px;
-  }
-  .story p {
-    font-size: 14px;
-    color: var(--text-dim);
-    line-height: 1.7;
-    margin-bottom: 10px;
-    font-weight: 300;
-  }
-
-  /* DIFFICULTY/TIME BLOCK */
-  .meta-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 10px;
-    margin-bottom: 24px;
-  }
-  .meta-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 14px;
-    text-align: center;
-  }
-  .meta-label {
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    color: var(--text-muted);
-    margin-bottom: 6px;
-  }
-  .meta-value {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 20px;
-    font-weight: 700;
-    color: var(--text);
-  }
-  .meta-value.difficulty { color: var(--gold); }
-
-  /* COMPLETION ORDER */
-  .order {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 16px 20px;
-    margin-bottom: 24px;
-  }
-  .order-title {
-    font-family: 'Press Start 2P', monospace;
-    font-size: 9px;
-    color: var(--accent);
-    letter-spacing: 1px;
-    margin-bottom: 12px;
-  }
-  .order-steps {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-  .order-step {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    font-size: 13px;
-    color: var(--text-dim);
-    line-height: 1.5;
-  }
-  .order-num {
-    flex-shrink: 0;
-    width: 22px;
-    height: 22px;
-    border-radius: 50%;
-    background: var(--accent-soft);
-    color: var(--accent);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  /* 100% CELEBRATION */
-  .celebration {
-    display: none;
-    text-align: center;
-    padding: 30px;
-    animation: fadeIn 0.5s;
-  }
-  .celebration.show { display: block; }
-  .celebration-text {
-    font-family: 'Press Start 2P', monospace;
-    font-size: clamp(12px, 3vw, 18px);
-    color: var(--gold);
-    text-shadow: 0 0 30px var(--gold-soft);
-    margin-bottom: 8px;
-  }
-  .celebration-sub {
-    font-size: 14px;
-    color: var(--text-dim);
-    font-weight: 300;
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+  /* STORY */
+  .story { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 18px; margin-top: 20px; }
+  .story-title { font-family: 'Press Start 2P', monospace; font-size: 8px; color: var(--accent); letter-spacing: 1px; margin-bottom: 10px; }
+  .story p { font-size: 13px; color: var(--text-dim); line-height: 1.7; font-weight: 300; }
 
   /* MOBILE */
   @media (max-width: 600px) {
     .app { padding: 12px 10px 80px; }
-    .dashboard { padding: 14px; }
-    .item { padding: 10px 14px; }
-    .category-header { padding: 12px 14px; }
-    .save-section { padding: 12px 14px; }
+    .game-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 8px; }
+    .item { padding: 9px 12px; }
   }
 </style>
 </head>
 <body>
 <div class="app" id="app"></div>
-
+<script src="games.js"></script>
 <script>
-// ============ DEMO GAME DATA ============
-// This is example data for a fictional game to show the structure.
-// Each real game tracker would replace this with actual game data.
-
-const GAMES = {
-  "helldivers-2": {
-    title: "Helldivers 2",
-    difficulty: "?/10",
-    timeEstimate: "?-? hrs",
-    hardestPart: "?",
-    missables: [
-      "WIP, brought to you by Purrgress"
-    ],
-    completionOrder: [
-      "WIP",
-      "purrgress wuz here"
-    ],
-    categories: [
-      {
-        name: "Weapons",
-        items: [
-          { name: "False Knight", location: "Forgotten Crossroads", tip: null },
-          { name: "Hornet Protector", location: "Greenpath", tip: null },
-          { name: "Soul Master", location: "Soul Sanctum", tip: "Learn to dodge the ground slam phase 2" },
-          { name: "Dung Defender", location: "Royal Waterways", tip: null },
-          { name: "Broken Vessel", location: "Ancient Basin", tip: null },
-          { name: "Nosk", location: "Deepnest", tip: "Follow your clone \u2014 the path loops around" },
-          { name: "Mantis Lords", location: "Fungal Wastes", tip: "Best early fight to learn parrying" },
-          { name: "The Hollow Knight", location: "Temple of the Black Egg", tip: null },
-          { name: "Nightmare King Grimm", location: "Grimm Troupe DLC", tip: "Hardest base-game boss. Learn the pufferfish attack timing" },
-          { name: "Absolute Radiance", location: "Pantheon of Hallownest", tip: "Final boss. Practice in Hall of Gods first" },
-        ]
-      },
-      {
-        name: "Warbonds",
-        items: [
-          { name: "gun 1", location: null, tip: null },
-          { name: "gun 2", location: null, tip: null },
-          { name: "Stalwart Shell", location: null, tip: null },
-          { name: "Soul Catcher", location: null, tip: null },
-          { name: "Shaman Stone", location: "Forgotten Crossroads, near Ancestral Mound", tip: null },
-          { name: "Quick Focus", location: "Sly\u2019s Shop", tip: null },
-          { name: "Lifeblood Heart", location: "Sly\u2019s Shop", tip: null },
-          { name: "Mark of Pride", location: "Mantis Village, after Mantis Lords", tip: null },
-          { name: "Sharp Shadow", location: "Deepnest", tip: null },
-          { name: "Grimmchild / Carefree Melody", location: "Grimm Troupe DLC", tip: null },
-        ]
-      },
-      {
-        name: "Collectibles \u2014 Grubs",
-        items: [
-          { name: "Grub 1", location: "Forgotten Crossroads \u2014 near Gruzmother", tip: null },
-          { name: "Grub 2", location: "Forgotten Crossroads \u2014 behind breakable wall", tip: null },
-          { name: "Grub 3", location: "Greenpath \u2014 above Stag Station", tip: null },
-          { name: "Grub 4", location: "Greenpath \u2014 near acid pool, requires Isma\u2019s Tear", tip: null },
-          { name: "Grub 5", location: "Fungal Wastes \u2014 behind Mantis Village", tip: null },
-          { name: "Grub 6", location: "City of Tears \u2014 near Emilitia", tip: null },
-          { name: "Grub 7", location: "Crystal Peak \u2014 above Crystallized Mound", tip: "Easy to miss, requires Crystal Heart" },
-          { name: "Grub 8", location: "Deepnest \u2014 near the hot spring", tip: "One of these is Grubmimics \u2014 be ready" },
-        ]
-      },
-      {
-        name: "Upgrades",
-        items: [
-          { name: "Mothwing Cloak (Dash)", location: "Greenpath, after Hornet", tip: null },
-          { name: "Mantis Claw (Wall Jump)", location: "Mantis Village", tip: null },
-          { name: "Crystal Heart (Super Dash)", location: "Crystal Peak", tip: null },
-          { name: "Isma\u2019s Tear (Acid Immunity)", location: "Royal Waterways", tip: null },
-          { name: "Monarch Wings (Double Jump)", location: "Ancient Basin", tip: null },
-          { name: "Shade Cloak (Shadow Dash)", location: "Abyss", tip: null },
-          { name: "Dream Nail", location: "Resting Grounds", tip: null },
-          { name: "Awoken Dream Nail", location: "Collect 1800 Essence", tip: null },
-        ]
-      },
-      {
-        name: "Achievements",
-        items: [
-          { name: "Completion", location: "Achieve 100% game completion", tip: null },
-          { name: "True Completion", location: "Achieve 112% game completion (DLC included)", tip: null },
-          { name: "Speed Completion", location: "Finish the game in under 5 hours", tip: "Separate save file recommended" },
-          { name: "Steel Soul", location: "Finish the game in Steel Soul mode (permadeath)", tip: "Do this after you know the game inside out" },
-          { name: "Embrace the Void", location: "Complete Pantheon of Hallownest with all bindings", tip: "The true final challenge. This is the mountain." },
-        ]
-      }
-    ],
-    story: {
-      text: "This is where your personal completion story goes. Two or three paragraphs about your journey \u2014 when you played it, how long it took, what almost made you quit, what the Pantheon of Hallownest taught you about persistence, and why it was worth finishing. This is the Sensei brand element that makes this tracker human."
-    }
-  },
-  "celeste": {
-    title: "Celeste",
-    difficulty: "9/10",
-    timeEstimate: "40\u201360 hrs",
-    hardestPart: "Chapter 9 Farewell golden strawberry",
-    missables: [
-      "No permanently missable items \u2014 all chapters can be replayed"
-    ],
-    completionOrder: [
-      "Beat all A-sides (main chapters) first for the story",
-      "Collect all red strawberries on A-sides",
-      "Complete all B-sides (unlocked via cassette tapes in each chapter)",
-      "Complete all C-sides (unlocked after all B-sides)",
-      "Tackle Chapter 9 Farewell",
-      "Golden strawberries last \u2014 these require deathless runs of each chapter"
-    ],
-    categories: [
-      {
-        name: "A-Side Strawberries",
-        items: [
-          { name: "Chapter 1 \u2014 Forsaken City (all 20)", location: "Throughout chapter", tip: null },
-          { name: "Chapter 2 \u2014 Old Site (all 18)", location: "Throughout chapter", tip: null },
-          { name: "Chapter 3 \u2014 Celestial Resort (all 25)", location: "Throughout chapter", tip: "Longest chapter \u2014 some are well hidden" },
-          { name: "Chapter 4 \u2014 Golden Ridge (all 29)", location: "Throughout chapter", tip: null },
-          { name: "Chapter 5 \u2014 Mirror Temple (all 31)", location: "Throughout chapter", tip: null },
-          { name: "Chapter 6 \u2014 Reflection (all 1)", location: "The crystal heart only", tip: null },
-          { name: "Chapter 7 \u2014 Summit (all 47)", location: "Throughout chapter", tip: null },
-        ]
-      },
-      {
-        name: "B-Sides",
-        items: [
-          { name: "1B \u2014 Forsaken City", location: "Cassette tape in Ch.1", tip: null },
-          { name: "2B \u2014 Old Site", location: "Cassette tape in Ch.2", tip: null },
-          { name: "3B \u2014 Celestial Resort", location: "Cassette tape in Ch.3", tip: null },
-          { name: "4B \u2014 Golden Ridge", location: "Cassette tape in Ch.4", tip: null },
-          { name: "5B \u2014 Mirror Temple", location: "Cassette tape in Ch.5", tip: null },
-          { name: "6B \u2014 Reflection", location: "Cassette tape in Ch.6", tip: null },
-          { name: "7B \u2014 Summit", location: "Cassette tape in Ch.7", tip: "Major difficulty spike" },
-          { name: "8B \u2014 Core", location: "Cassette tape in Ch.8", tip: null },
-        ]
-      },
-      {
-        name: "C-Sides",
-        items: [
-          { name: "1C \u2014 Forsaken City", location: "Unlocked after all B-sides", tip: "Short but brutal" },
-          { name: "2C \u2014 Old Site", location: "Unlocked after all B-sides", tip: null },
-          { name: "3C \u2014 Celestial Resort", location: "Unlocked after all B-sides", tip: null },
-          { name: "4C \u2014 Golden Ridge", location: "Unlocked after all B-sides", tip: null },
-          { name: "5C \u2014 Mirror Temple", location: "Unlocked after all B-sides", tip: null },
-          { name: "6C \u2014 Reflection", location: "Unlocked after all B-sides", tip: null },
-          { name: "7C \u2014 Summit", location: "Unlocked after all B-sides", tip: null },
-          { name: "8C \u2014 Core", location: "Unlocked after all B-sides", tip: null },
-        ]
-      },
-      {
-        name: "Crystal Hearts",
-        items: [
-          { name: "Chapter 1 Heart", location: "Hidden path at the end of the bird dash tutorial", tip: null },
-          { name: "Chapter 2 Heart", location: "Interaction puzzle in the mirror area", tip: null },
-          { name: "Chapter 3 Heart", location: "Hidden behind Mr. Oshiro chase section", tip: null },
-          { name: "Chapter 4 Heart", location: "Requires precise floating platform navigation", tip: null },
-          { name: "Chapter 5 Heart", location: "Behind Theo puzzle section", tip: null },
-          { name: "Chapter 6 Heart", location: "Automatically awarded", tip: null },
-          { name: "Chapter 7 Heart", location: "Gembird collectible across the summit", tip: null },
-          { name: "Chapter 8 Heart", location: "Core completion", tip: null },
-        ]
-      },
-      {
-        name: "Golden Strawberries",
-        items: [
-          { name: "1A Golden", location: "Deathless run of Chapter 1 A-side", tip: "Start here \u2014 easiest golden" },
-          { name: "2A Golden", location: "Deathless run of Chapter 2", tip: null },
-          { name: "3A Golden", location: "Deathless run of Chapter 3", tip: "Long chapter. Patience." },
-          { name: "9 Golden (Farewell)", location: "Deathless run of Chapter 9", tip: "The Everest. Most players never get this." },
-          { name: "Dashless Golden (1A)", location: "Complete 1A without dashing", tip: null },
-        ]
-      }
-    ],
-    story: {
-      text: "Your personal completion story for Celeste goes here. The journey through golden strawberries, what the game\u2019s message about anxiety and persistence meant to you, and how it connects to the completionist philosophy."
-    }
-  }
-};
-
-// ============ APP STATE ============
+// ============ STATE ============
 let state = {};
-let currentGame = Object.keys(GAMES)[0];
+let currentGame = null;
+let searchQuery = '';
+const openCats = new Set();
 
 function initState() {
   const s = {};
-  for (const [gameId, game] of Object.entries(GAMES)) {
-    s[gameId] = {};
+  for (const [gid, game] of Object.entries(GAMES)) {
+    s[gid] = {};
     game.categories.forEach((cat, ci) => {
-      cat.items.forEach((item, ii) => {
-        s[gameId][`${ci}-${ii}`] = false;
-      });
+      cat.items.forEach((_, ii) => { s[gid][`${ci}-${ii}`] = false; });
     });
   }
   return s;
 }
 
-// ============ SAVE CODE SYSTEM ============
-function encodeState(st) {
-  // Compact: for each game, store a bitfield as base64
+// ============ SAVE CODE ============
+function encode(st) {
   const parts = [];
-  for (const [gameId, game] of Object.entries(GAMES)) {
+  for (const [gid, game] of Object.entries(GAMES)) {
     const bits = [];
     game.categories.forEach((cat, ci) => {
-      cat.items.forEach((item, ii) => {
-        bits.push(st[gameId]?.[`${ci}-${ii}`] ? 1 : 0);
-      });
+      cat.items.forEach((_, ii) => { bits.push(st[gid]?.[`${ci}-${ii}`] ? 1 : 0); });
     });
-    // Pack bits into bytes
+    // Skip games with zero progress
+    if (bits.every(b => b === 0)) continue;
     const bytes = [];
     for (let i = 0; i < bits.length; i += 8) {
       let byte = 0;
-      for (let b = 0; b < 8 && i + b < bits.length; b++) {
-        byte |= (bits[i + b] << b);
-      }
+      for (let b = 0; b < 8 && i + b < bits.length; b++) byte |= (bits[i + b] << b);
       bytes.push(byte);
     }
-    parts.push(gameId + ':' + btoa(String.fromCharCode(...bytes)));
+    parts.push(gid + ':' + btoa(String.fromCharCode(...bytes)));
   }
-  return 'CS1|' + parts.join('|');
+  return 'PG1|' + parts.join('|');
 }
 
-function decodeState(code) {
-  if (!code.startsWith('CS1|')) return null;
+function decode(code) {
+  if (!code.startsWith('PG1|')) return null;
   const st = initState();
   const parts = code.slice(4).split('|');
   for (const part of parts) {
-    const sepIdx = part.indexOf(':');
-    if (sepIdx === -1) continue;
-    const gameId = part.slice(0, sepIdx);
-    const b64 = part.slice(sepIdx + 1);
-    if (!GAMES[gameId]) continue;
+    const sep = part.indexOf(':');
+    if (sep === -1) continue;
+    const gid = part.slice(0, sep);
+    const b64 = part.slice(sep + 1);
+    if (!GAMES[gid]) continue;
     try {
       const raw = atob(b64);
-      const bytes = [];
-      for (let i = 0; i < raw.length; i++) bytes.push(raw.charCodeAt(i));
-      let bitIdx = 0;
-      GAMES[gameId].categories.forEach((cat, ci) => {
-        cat.items.forEach((item, ii) => {
-          const byteIdx = Math.floor(bitIdx / 8);
-          const bitPos = bitIdx % 8;
-          if (byteIdx < bytes.length) {
-            st[gameId][`${ci}-${ii}`] = !!(bytes[byteIdx] & (1 << bitPos));
-          }
-          bitIdx++;
+      const bytes = []; for (let i = 0; i < raw.length; i++) bytes.push(raw.charCodeAt(i));
+      let bi = 0;
+      GAMES[gid].categories.forEach((cat, ci) => {
+        cat.items.forEach((_, ii) => {
+          const byI = Math.floor(bi / 8), biP = bi % 8;
+          if (byI < bytes.length) st[gid][`${ci}-${ii}`] = !!(bytes[byI] & (1 << biP));
+          bi++;
         });
       });
     } catch(e) {}
@@ -808,209 +380,200 @@ function decodeState(code) {
 }
 
 // ============ STATS ============
-function getGameStats(gameId) {
-  const game = GAMES[gameId];
+function gameStats(gid) {
+  const game = GAMES[gid];
   let total = 0, done = 0;
   const cats = game.categories.map((cat, ci) => {
-    let catTotal = cat.items.length, catDone = 0;
-    cat.items.forEach((item, ii) => {
-      if (state[gameId]?.[`${ci}-${ii}`]) catDone++;
-    });
-    total += catTotal;
-    done += catDone;
-    return { name: cat.name, total: catTotal, done: catDone };
+    let cT = cat.items.length, cD = 0;
+    cat.items.forEach((_, ii) => { if (state[gid]?.[`${ci}-${ii}`]) cD++; });
+    total += cT; done += cD;
+    return { name: cat.name, total: cT, done: cD };
   });
-  return { total, done, cats, percent: total ? Math.round((done / total) * 100) : 0 };
+  return { total, done, cats, pct: total ? Math.round((done / total) * 100) : 0 };
 }
 
 // ============ RENDER ============
 function render() {
   const app = document.getElementById('app');
-  const game = GAMES[currentGame];
-  const stats = getGameStats(currentGame);
+  const gameIds = Object.keys(GAMES);
+  const totalGames = gameIds.length;
+  const completedGames = gameIds.filter(g => gameStats(g).pct === 100).length;
 
-  app.innerHTML = `
+  let html = `
     <div class="header">
-      <div class="header-title">COMPLETIONIST SENSEI</div>
-      <div class="header-sub">TRACK \u2022 PERSIST \u2022 COMPLETE</div>
+      <div class="header-title">PURRGRESS'S COMPLETIONIST TRACKER</div>
+      <div class="header-sub">${totalGames} GAME${totalGames !== 1 ? 'S' : ''} \u2022 ${completedGames} COMPLETED</div>
     </div>
-
-    <div class="game-switcher">
-      ${Object.entries(GAMES).map(([id, g]) => {
-        const s = getGameStats(id);
-        return `<button class="game-tab ${id === currentGame ? 'active' : ''}" onclick="switchGame('${id}')">${g.title} (${s.percent}%)</button>`;
-      }).join('')}
-    </div>
-
-    <div class="save-section">
-      <div class="save-section-header">
-        <div class="save-section-title">\u{1F4BE} SAVE CODE</div>
-        <div class="save-buttons">
-          <button class="btn btn-accent" onclick="generateCode()">Generate Save Code</button>
-          <button class="btn btn-gold" onclick="loadCode()">Load Save Code</button>
-        </div>
+    <div class="save-bar">
+      <div class="save-bar-title">\u{1F4BE} SAVE CODE</div>
+      <div class="save-bar-row">
+        <input class="save-input" id="saveInput" placeholder="Paste code to load or click Generate to save" />
+        <button class="btn btn-accent" onclick="genCode()">Generate</button>
+        <button class="btn btn-gold" onclick="loadCode()">Load</button>
       </div>
-      <textarea class="save-code-area" id="saveCodeArea" placeholder="Your save code appears here. Copy it to save your progress. Paste a code and click Load to restore."></textarea>
       <div class="save-msg" id="saveMsg"></div>
-    </div>
+    </div>`;
 
-    <div class="dashboard" ${stats.percent === 100 ? 'style="border-color: var(--gold); box-shadow: var(--complete-glow);"' : ''}>
-      <div class="dashboard-header">
-        <div class="dashboard-game-title">${game.title}</div>
-        <div class="dashboard-percent ${stats.percent === 100 ? 'complete' : ''}">${stats.percent}%</div>
-      </div>
-      <div class="overall-bar">
-        <div class="overall-bar-fill ${stats.percent === 100 ? 'complete' : ''}" style="width: ${stats.percent}%"></div>
-      </div>
-      <div class="category-stats">
-        ${stats.cats.map(c => {
-          const cp = c.total ? Math.round((c.done / c.total) * 100) : 0;
-          const isFull = c.done === c.total;
-          return `
-            <div class="cat-stat" ${isFull ? 'style="border-color: var(--gold);"' : ''}>
-              <div class="cat-stat-name">${c.name}</div>
-              <div class="cat-stat-count">${isFull ? '<span class="complete-text">' : '<span class="done">'}${c.done}</span> / ${c.total}</div>
-              <div class="cat-bar"><div class="cat-bar-fill ${isFull ? 'complete' : ''}" style="width: ${cp}%"></div></div>
-            </div>`;
-        }).join('')}
-      </div>
-      <div class="celebration ${stats.percent === 100 ? 'show' : ''}">
-        <div class="celebration-text">\u{1F451} 100% COMPLETE \u{1F451}</div>
-        <div class="celebration-sub">You finished what you started. That changes who you are.</div>
-      </div>
-    </div>
+  if (!currentGame) {
+    // GAME SELECT VIEW
+    html += `<input class="game-search" type="text" placeholder="Search games..." value="${searchQuery}" oninput="searchQuery=this.value;render();" />`;
 
-    <div class="meta-grid">
-      <div class="meta-card">
-        <div class="meta-label">Est. Time</div>
-        <div class="meta-value">${game.timeEstimate}</div>
-      </div>
-      <div class="meta-card">
-        <div class="meta-label">Difficulty</div>
-        <div class="meta-value difficulty">${game.difficulty}</div>
-      </div>
-      <div class="meta-card">
-        <div class="meta-label">Hardest Part</div>
-        <div class="meta-value" style="font-size:12px; color: var(--text-dim);">${game.hardestPart}</div>
-      </div>
-    </div>
+    const filtered = gameIds.filter(gid =>
+      GAMES[gid].title.toLowerCase().includes(searchQuery.toLowerCase())
+    );
 
-    ${game.missables.length ? `
-    <div class="missables">
-      <div class="missables-title">\u26A0 MISSABLES \u2014 READ BEFORE PLAYING</div>
-      <ul class="missables-list">
-        ${game.missables.map(m => `<li>${m}</li>`).join('')}
-      </ul>
-    </div>` : ''}
+    html += `<div class="game-count">${filtered.length} of ${totalGames} games shown</div>`;
+    html += `<div class="game-grid">`;
 
-    <div class="order">
-      <div class="order-title">\u{1F9ED} OPTIMAL COMPLETION ORDER</div>
-      <div class="order-steps">
-        ${game.completionOrder.map((step, i) => `
-          <div class="order-step">
-            <div class="order-num">${i + 1}</div>
-            <div>${step}</div>
-          </div>`).join('')}
-      </div>
-    </div>
+    for (const gid of filtered) {
+      const g = GAMES[gid];
+      const s = gameStats(gid);
+      const isFull = s.pct === 100;
+      html += `
+        <div class="game-card ${isFull ? 'complete' : ''}" onclick="openGame('${gid}')">
+          <span class="game-card-emoji">${g.cover || '🎮'}</span>
+          <div class="game-card-title">${g.title}</div>
+          <div class="game-card-bar"><div class="game-card-bar-fill ${isFull ? 'complete' : ''}" style="width:${s.pct}%"></div></div>
+          <div class="game-card-percent ${isFull ? 'complete' : ''}">${s.pct}%</div>
+        </div>`;
+    }
+    html += `</div>`;
 
-    ${game.categories.map((cat, ci) => {
-      const catDone = cat.items.filter((_, ii) => state[currentGame]?.[`${ci}-${ii}`]).length;
-      return `
-      <div class="category">
-        <div class="category-header" onclick="toggleCat(${ci})">
-          <div class="category-header-left">
-            <div class="category-toggle" id="cat-toggle-${ci}">\u25B6</div>
-            <div class="category-name">${cat.name}</div>
-          </div>
-          <div class="category-count"><span class="done">${catDone}</span> / ${cat.items.length}</div>
+  } else {
+    // GAME TRACKER VIEW
+    const game = GAMES[currentGame];
+    const s = gameStats(currentGame);
+    const isFull = s.pct === 100;
+
+    html += `<button class="back-btn" onclick="closeGame()">\u2190 All Games</button>`;
+
+    html += `
+      <div class="dashboard ${isFull ? 'complete' : ''}">
+        <div class="dash-header">
+          <div class="dash-title">${game.cover || '🎮'} ${game.title}</div>
+          <div class="dash-pct ${isFull ? 'complete' : ''}">${s.pct}%</div>
         </div>
-        <div class="category-items" id="cat-items-${ci}">
-          ${cat.items.map((item, ii) => {
-            const checked = state[currentGame]?.[`${ci}-${ii}`];
-            return `
-            <div class="item ${checked ? 'checked' : ''}" onclick="toggleItem(${ci}, ${ii})">
-              <div class="item-checkbox">${checked ? '\u2714' : ''}</div>
-              <div class="item-content">
-                <div class="item-name">${item.name}</div>
-                <div class="item-detail">${item.location}</div>
-                ${item.tip ? `<div class="item-tip">\u{1F4A1} ${item.tip}</div>` : ''}
-              </div>
+        <div class="overall-bar"><div class="overall-bar-fill ${isFull ? 'complete' : ''}" style="width:${s.pct}%"></div></div>
+        <div class="cat-stats">
+          ${s.cats.map(c => {
+            const cp = c.total ? Math.round((c.done / c.total) * 100) : 0;
+            const f = c.done === c.total;
+            return `<div class="cat-stat ${f ? 'complete' : ''}">
+              <div class="cat-stat-name">${c.name}</div>
+              <div class="cat-stat-count">${f ? '<span class="gold">' : '<span class="hi">'}${c.done}</span> / ${c.total}</div>
+              <div class="cat-bar"><div class="cat-bar-fill ${f ? 'complete' : ''}" style="width:${cp}%"></div></div>
             </div>`;
           }).join('')}
         </div>
+        <div class="celebration ${isFull ? 'show' : ''}">
+          <div class="celeb-text">\u{1F451} 100% COMPLETE \u{1F451}</div>
+          <div class="celeb-sub">You finished what you started. That changes who you are.</div>
+        </div>
       </div>`;
-    }).join('')}
 
-    <div class="story">
-      <div class="story-title">\u{1F58A} MY COMPLETION STORY</div>
-      <p>${game.story.text}</p>
-    </div>
-  `;
+    html += `
+      <div class="meta-grid">
+        <div class="meta-card"><div class="meta-label">Est. Time</div><div class="meta-value">${game.timeEstimate}</div></div>
+        <div class="meta-card"><div class="meta-label">Difficulty</div><div class="meta-value diff">${game.difficulty}</div></div>
+        <div class="meta-card"><div class="meta-label">Hardest Part</div><div class="meta-value" style="font-size:11px;color:var(--text-dim)">${game.hardestPart}</div></div>
+      </div>`;
+
+    if (game.missables && game.missables.length) {
+      html += `
+        <div class="missables">
+          <div class="miss-title">\u26A0 MISSABLES — READ BEFORE PLAYING</div>
+          <ul class="miss-list">${game.missables.map(m => `<li>${m}</li>`).join('')}</ul>
+        </div>`;
+    }
+
+    if (game.completionOrder && game.completionOrder.length) {
+      html += `
+        <div class="order">
+          <div class="order-title">\u{1F9ED} OPTIMAL COMPLETION ORDER</div>
+          <div class="order-steps">
+            ${game.completionOrder.map((s, i) => `<div class="order-step"><div class="order-num">${i + 1}</div><div>${s}</div></div>`).join('')}
+          </div>
+        </div>`;
+    }
+
+    game.categories.forEach((cat, ci) => {
+      const catDone = cat.items.filter((_, ii) => state[currentGame]?.[`${ci}-${ii}`]).length;
+      const isOpen = openCats.has(ci);
+      html += `
+        <div class="category">
+          <div class="cat-header" onclick="toggleCat(${ci})">
+            <div class="cat-header-left">
+              <div class="cat-toggle ${isOpen ? 'open' : ''}" id="ct-${ci}">\u25B6</div>
+              <div class="cat-name">${cat.name}</div>
+            </div>
+            <div class="cat-count"><span class="hi">${catDone}</span> / ${cat.items.length}</div>
+          </div>
+          <div class="cat-items ${isOpen ? 'open' : ''}" id="ci-${ci}">
+            ${cat.items.map((item, ii) => {
+              const chk = state[currentGame]?.[`${ci}-${ii}`];
+              return `
+              <div class="item ${chk ? 'checked' : ''}" onclick="toggle(${ci},${ii})">
+                <div class="item-cb">${chk ? '\u2714' : ''}</div>
+                <div class="item-content">
+                  <div class="item-name">${item.name}</div>
+                  <div class="item-loc">${item.location}</div>
+                  ${item.tip ? `<div class="item-tip">\u{1F4A1} ${item.tip}</div>` : ''}
+                </div>
+              </div>`;
+            }).join('')}
+          </div>
+        </div>`;
+    });
+
+    if (game.story) {
+      html += `
+        <div class="story">
+          <div class="story-title">\u{1F58A} MY COMPLETION STORY</div>
+          <p>${game.story}</p>
+        </div>`;
+    }
+  }
+
+  app.innerHTML = html;
 }
 
 // ============ INTERACTIONS ============
-const openCats = new Set();
+function openGame(gid) { currentGame = gid; openCats.clear(); render(); window.scrollTo(0, 0); }
+function closeGame() { currentGame = null; render(); window.scrollTo(0, 0); }
 
 function toggleCat(ci) {
-  const items = document.getElementById(`cat-items-${ci}`);
-  const toggle = document.getElementById(`cat-toggle-${ci}`);
-  if (openCats.has(ci)) {
-    openCats.delete(ci);
-    items.classList.remove('open');
-    toggle.classList.remove('open');
-  } else {
-    openCats.add(ci);
-    items.classList.add('open');
-    toggle.classList.add('open');
-  }
+  if (openCats.has(ci)) openCats.delete(ci);
+  else openCats.add(ci);
+  const items = document.getElementById(`ci-${ci}`);
+  const toggle = document.getElementById(`ct-${ci}`);
+  if (items) items.classList.toggle('open');
+  if (toggle) toggle.classList.toggle('open');
 }
 
-function toggleItem(ci, ii) {
-  const key = `${ci}-${ii}`;
-  state[currentGame][key] = !state[currentGame][key];
-  render();
-  // Re-open the categories that were open
-  openCats.forEach(c => {
-    const items = document.getElementById(`cat-items-${c}`);
-    const toggle = document.getElementById(`cat-toggle-${c}`);
-    if (items) { items.classList.add('open'); }
-    if (toggle) { toggle.classList.add('open'); }
-  });
-}
-
-function switchGame(gameId) {
-  currentGame = gameId;
-  openCats.clear();
+function toggle(ci, ii) {
+  state[currentGame][`${ci}-${ii}`] = !state[currentGame][`${ci}-${ii}`];
   render();
 }
 
-function generateCode() {
-  const code = encodeState(state);
-  document.getElementById('saveCodeArea').value = code;
-  document.getElementById('saveMsg').textContent = '\u2714 Code generated! Copy it somewhere safe.';
-  setTimeout(() => { document.getElementById('saveMsg').textContent = ''; }, 4000);
+function genCode() {
+  const code = encode(state);
+  document.getElementById('saveInput').value = code;
+  showMsg('\u2714 Code generated! Copy it somewhere safe.', 'var(--green)');
 }
 
 function loadCode() {
-  const code = document.getElementById('saveCodeArea').value.trim();
-  if (!code) {
-    document.getElementById('saveMsg').textContent = '\u2718 Paste a save code first.';
-    document.getElementById('saveMsg').style.color = 'var(--red)';
-    setTimeout(() => { document.getElementById('saveMsg').textContent = ''; document.getElementById('saveMsg').style.color = 'var(--green)'; }, 3000);
-    return;
-  }
-  const loaded = decodeState(code);
-  if (!loaded) {
-    document.getElementById('saveMsg').textContent = '\u2718 Invalid save code.';
-    document.getElementById('saveMsg').style.color = 'var(--red)';
-    setTimeout(() => { document.getElementById('saveMsg').textContent = ''; document.getElementById('saveMsg').style.color = 'var(--green)'; }, 3000);
-    return;
-  }
+  const code = document.getElementById('saveInput').value.trim();
+  if (!code) { showMsg('\u2718 Paste a save code first.', 'var(--red)'); return; }
+  const loaded = decode(code);
+  if (!loaded) { showMsg('\u2718 Invalid save code.', 'var(--red)'); return; }
   state = loaded;
-  document.getElementById('saveMsg').textContent = '\u2714 Progress loaded!';
-  setTimeout(() => { document.getElementById('saveMsg').textContent = ''; }, 3000);
+  showMsg('\u2714 Progress loaded!', 'var(--green)');
   render();
+}
+
+function showMsg(text, color) {
+  const el = document.getElementById('saveMsg');
+  if (el) { el.textContent = text; el.style.color = color; setTimeout(() => { el.textContent = ''; }, 4000); }
 }
 
 // ============ INIT ============
