@@ -20,6 +20,8 @@ const GAMES = {
     difficulty: "?/10",
     timeEstimate: "??–?? hrs",
     hardestPart: "Describe the hardest part",
+    lastUpdated: "February 13, 2026",
+    gameVersion: "1.0",
 
     missables: [
       "First missable thing and what to do about it",
@@ -64,6 +66,8 @@ const GAMES = {
     difficulty: "?/10",
     timeEstimate: "??–?? hrs",
     hardestPart: "Describe the hardest part",
+    lastUpdated: "February 13, 2026",
+    gameVersion: "1.0",
 
     missables: [
       "First missable thing and what to do about it",
@@ -477,6 +481,8 @@ const GAMES = {
 //    difficulty: "?/10",
 //    timeEstimate: "??–?? hrs",
 //    hardestPart: "Describe the hardest part",
+//    lastUpdated: "Month Day, Year",
+//    gameVersion: "1.0",
 //
 //    missables: [
 //      "First missable thing and what to do about it",
