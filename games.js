@@ -457,7 +457,329 @@ const GAMES = {
 
     story: "Your personal completion story goes here.",
   },
-  
+
+  // ============================================================
+  // THE FINALS
+  // ============================================================
+
+    "the-finals": {
+    title: "THE FINALS",
+    cover: "🏆",
+    difficulty: "?/10",
+    timeEstimate: "??–?? hrs",
+    hardestPart: "Describe the hardest part",
+    lastUpdated: "February 13, 2026",
+    gameVersion: "1.0",
+
+    missables: [
+      "First missable thing and what to do about it",
+      "Second missable thing",
+      // Add more or use just: "No permanently missable items"
+    ],
+
+    completionOrder: [
+      "Step 1 — what to do first",
+      "Step 2 — what to do next",
+      "Step 3 — and so on",
+    ],
+
+        categories: [
+      {
+        name: "Category Name",
+        items: [
+          { name: "Item Name", location: "Where / how to get it", tip: null },
+          { name: "Item Name", location: "Where / how to get it", tip: "Your personal tip here" },
+          // Add as many items as needed
+        ]
+      },
+      {
+        name: "Another Category",
+        items: [
+          { name: "Item Name", location: "Where / how to get it", tip: null },
+        ]
+      },
+      // Add as many categories as needed
+    ],
+
+    story: "Your personal completion story goes here.",
+  },
+
+  // ============================================================
+  // WARFRAME
+  // ============================================================
+
+    "warframe": {
+    title: "Warframe",
+    cover: "⚔️",
+    difficulty: "?/10",
+    timeEstimate: "??–?? hrs",
+    hardestPart: "Describe the hardest part",
+    lastUpdated: "February 13, 2026",
+    gameVersion: "1.0",
+
+    missables: [
+      "First missable thing and what to do about it",
+      "Second missable thing",
+      // Add more or use just: "No permanently missable items"
+    ],
+
+    completionOrder: [
+      "Step 1 — what to do first",
+      "Step 2 — what to do next",
+      "Step 3 — and so on",
+    ],
+
+        categories: [
+      {
+        name: "Category Name",
+        items: [
+          { name: "Item Name", location: "Where / how to get it", tip: null },
+          { name: "Item Name", location: "Where / how to get it", tip: "Your personal tip here" },
+          // Add as many items as needed
+        ]
+      },
+      {
+        name: "Another Category",
+        items: [
+          { name: "Item Name", location: "Where / how to get it", tip: null },
+        ]
+      },
+      // Add as many categories as needed
+    ],
+
+    story: "Your personal completion story goes here.",
+  },
+
+  // ============================================================
+  // PATH OF EXILE
+  // ============================================================
+
+    "path-of-exile": {
+    title: "Path of Exile",
+    cover: "🗡️",
+    difficulty: "?/10",
+    timeEstimate: "??–?? hrs",
+    hardestPart: "Describe the hardest part",
+    lastUpdated: "February 13, 2026",
+    gameVersion: "1.0",
+
+    missables: [
+      "First missable thing and what to do about it",
+      "Second missable thing",
+      // Add more or use just: "No permanently missable items"
+    ],
+
+    completionOrder: [
+      "Step 1 — what to do first",
+      "Step 2 — what to do next",
+      "Step 3 — and so on",
+    ],
+
+        categories: [
+      {
+        name: "Category Name",
+        items: [
+          { name: "Item Name", location: "Where / how to get it", tip: null },
+          { name: "Item Name", location: "Where / how to get it", tip: "Your personal tip here" },
+          // Add as many items as needed
+        ]
+      },
+      {
+        name: "Another Category",
+        items: [
+          { name: "Item Name", location: "Where / how to get it", tip: null },
+        ]
+      },
+      // Add as many categories as needed
+    ],
+
+    story: "Your personal completion story goes here.",
+  },
+
+  // ============================================================
+  // PATH OF EXILE 2
+  // ============================================================
+
+    "path-of-exile-2": {
+    title: "Path of Exile 2",
+    cover: "💀",
+    difficulty: "?/10",
+    timeEstimate: "??–?? hrs",
+    hardestPart: "Describe the hardest part",
+    lastUpdated: "February 13, 2026",
+    gameVersion: "1.0",
+
+    missables: [
+      "First missable thing and what to do about it",
+      "Second missable thing",
+      // Add more or use just: "No permanently missable items"
+    ],
+
+    completionOrder: [
+      "Step 1 — what to do first",
+      "Step 2 — what to do next",
+      "Step 3 — and so on",
+    ],
+
+        categories: [
+      {
+        name: "Category Name",
+        items: [
+          { name: "Item Name", location: "Where / how to get it", tip: null },
+          { name: "Item Name", location: "Where / how to get it", tip: "Your personal tip here" },
+          // Add as many items as needed
+        ]
+      },
+      {
+        name: "Another Category",
+        items: [
+          { name: "Item Name", location: "Where / how to get it", tip: null },
+        ]
+      },
+      // Add as many categories as needed
+    ],
+
+    story: "Your personal completion story goes here.",
+  },
+
+  // ============================================================
+  // MINECRAFT
+  // ============================================================
+
+    "minecraft": {
+    title: "Minecraft",
+    cover: "⛏️",
+    difficulty: "?/10",
+    timeEstimate: "??–?? hrs",
+    hardestPart: "Describe the hardest part",
+    lastUpdated: "February 13, 2026",
+    gameVersion: "1.0",
+
+    missables: [
+      "First missable thing and what to do about it",
+      "Second missable thing",
+      // Add more or use just: "No permanently missable items"
+    ],
+
+    completionOrder: [
+      "Step 1 — what to do first",
+      "Step 2 — what to do next",
+      "Step 3 — and so on",
+    ],
+
+        categories: [
+      {
+        name: "Category Name",
+        items: [
+          { name: "Item Name", location: "Where / how to get it", tip: null },
+          { name: "Item Name", location: "Where / how to get it", tip: "Your personal tip here" },
+          // Add as many items as needed
+        ]
+      },
+      {
+        name: "Another Category",
+        items: [
+          { name: "Item Name", location: "Where / how to get it", tip: null },
+        ]
+      },
+      // Add as many categories as needed
+    ],
+
+    story: "Your personal completion story goes here.",
+  },
+
+  // ============================================================
+  // TERRARIA
+  // ============================================================
+
+    "terraria": {
+    title: "Terraria",
+    cover: "🌳",
+    difficulty: "?/10",
+    timeEstimate: "??–?? hrs",
+    hardestPart: "Describe the hardest part",
+    lastUpdated: "February 13, 2026",
+    gameVersion: "1.0",
+
+    missables: [
+      "First missable thing and what to do about it",
+      "Second missable thing",
+      // Add more or use just: "No permanently missable items"
+    ],
+
+    completionOrder: [
+      "Step 1 — what to do first",
+      "Step 2 — what to do next",
+      "Step 3 — and so on",
+    ],
+
+        categories: [
+      {
+        name: "Category Name",
+        items: [
+          { name: "Item Name", location: "Where / how to get it", tip: null },
+          { name: "Item Name", location: "Where / how to get it", tip: "Your personal tip here" },
+          // Add as many items as needed
+        ]
+      },
+      {
+        name: "Another Category",
+        items: [
+          { name: "Item Name", location: "Where / how to get it", tip: null },
+        ]
+      },
+      // Add as many categories as needed
+    ],
+
+    story: "Your personal completion story goes here.",
+  },
+
+  // ============================================================
+  // HYTALE
+  // ============================================================
+
+    "hytale": {
+    title: "Hytale",
+    cover: "🏰",
+    difficulty: "?/10",
+    timeEstimate: "??–?? hrs",
+    hardestPart: "Describe the hardest part",
+    lastUpdated: "February 13, 2026",
+    gameVersion: "1.0",
+
+    missables: [
+      "First missable thing and what to do about it",
+      "Second missable thing",
+      // Add more or use just: "No permanently missable items"
+    ],
+
+    completionOrder: [
+      "Step 1 — what to do first",
+      "Step 2 — what to do next",
+      "Step 3 — and so on",
+    ],
+
+        categories: [
+      {
+        name: "Category Name",
+        items: [
+          { name: "Item Name", location: "Where / how to get it", tip: null },
+          { name: "Item Name", location: "Where / how to get it", tip: "Your personal tip here" },
+          // Add as many items as needed
+        ]
+      },
+      {
+        name: "Another Category",
+        items: [
+          { name: "Item Name", location: "Where / how to get it", tip: null },
+        ]
+      },
+      // Add as many categories as needed
+    ],
+
+    story: "Your personal completion story goes here.",
+  },
+
 };
 
 
