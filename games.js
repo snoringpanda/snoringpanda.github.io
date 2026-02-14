@@ -531,6 +531,32 @@ const GAMES = {
           { name: "DBS-2 Double Freedom", location: "WIP", tip: null },
         ]
       },
+      {
+        name: "Titles",
+        items: [
+          { name: "Cadet", location: "WIP", tip: null },
+          { name: "Space Cadet", location: "WIP", tip: null },
+          { name: "Sergeant", location: "WIP", tip: null },
+          { name: "Master Sergeant", location: "WIP", tip: null },
+          { name: "Chief", location: "WIP", tip: null },
+          { name: "Space Chief Prime", location: "WIP", tip: null },
+          { name: "Death Captain", location: "WIP", tip: null },
+          { name: "Marshal", location: "WIP", tip: null },
+          { name: "Star Marshal", location: "WIP", tip: null },
+          { name: "Admiral", location: "WIP", tip: null },
+          { name: "Skull Admiral", location: "WIP", tip: null },
+          { name: "Fleet Admiral", location: "WIP", tip: null },
+          { name: "Admirable Admiral", location: "WIP", tip: null },
+          { name: "Commander", location: "WIP", tip: null },
+          { name: "Galactic Commander", location: "WIP", tip: null },
+          { name: "Hell Commander", location: "WIP", tip: null },
+          { name: "General", location: "WIP", tip: null },
+          { name: "5-Star General", location: "WIP", tip: null },
+          { name: "10-Star General", location: "WIP", tip: null },
+          { name: "Private", location: "WIP", tip: null },
+          { name: "Super Private", location: "WIP", tip: null },
+        ]
+      },
     ],
 
     story: "Your personal completion story goes here.",
