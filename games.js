@@ -309,7 +309,7 @@ const GAMES = {
         ]
       },
       {
-        name: "Ship Module Upgrades",
+        name: "Ship Modules",
         items: [
           { name: "Patriotic Administration Center - Donation Access License", location: "WIP", tip: null },
           { name: "Patriotic Administration Center - Streamlined Request Process", location: "WIP", tip: null },
@@ -432,7 +432,25 @@ const GAMES = {
         ]
       },
       {
-        name: "Superstore Purchases",
+        name: "Weapons",
+        items: [
+          { name: "WIP", location: "WIP", tip: null },
+        ]
+      },
+      {
+        name: "Boosters",
+        items: [
+          { name: "WIP", location: "WIP", tip: null },
+        ]
+      },
+      {
+        name: "Vehicle Patterns",
+        items: [
+          { name: "WIP", location: "WIP", tip: null },
+        ]
+      },
+      {
+        name: "Armors/Helmets",
         items: [
           { name: "CE-81 Juggernaut (Armor)", location: "WIP", tip: null },
           { name: "CE-81 Juggernaut (Helmet)", location: "WIP", tip: null },
@@ -532,6 +550,24 @@ const GAMES = {
         ]
       },
       {
+        name: "Player Cards",
+        items: [
+          { name: "WIP", location: "WIP", tip: null },
+        ]
+      },
+      {
+        name: "Capes",
+        items: [
+          { name: "WIP", location: "WIP", tip: null },
+        ]
+      },
+      {
+        name: "Emotes/Victory Poses",
+        items: [
+          { name: "WIP", location: "WIP", tip: null },
+        ]
+      },
+      {
         name: "Titles",
         items: [
           { name: "Cadet", location: "WIP", tip: null },
@@ -555,6 +591,12 @@ const GAMES = {
           { name: "10-Star General", location: "WIP", tip: null },
           { name: "Private", location: "WIP", tip: null },
           { name: "Super Private", location: "WIP", tip: null },
+        ]
+      },
+      {
+        name: "Difficulties",
+        items: [
+          { name: "WIP", location: "WIP", tip: null },
         ]
       },
     ],
